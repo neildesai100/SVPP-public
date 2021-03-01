@@ -1,0 +1,373 @@
+﻿@model SVPP.Models.PartnerSkillViewModel
+@using Microsoft.AspNetCore.Authorization
+@using SVPP.Authorization
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "Partners";
+}
+@using X.PagedList.Mvc.Core
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-6">
+                @if (this.User.IsInRole("Guest"))
+                {
+                    <h1>Guest</h1>
+                }
+                else
+                {
+                    <h1>Partners</h1>
+                }
+            </div>
+        </div>
+    </div>
+    @if (this.User.IsInRole("Admin"))
+    {
+        <div class="jumbotron-fluid">
+            <form asp-controller="Partners" asp-action="index" method="get">
+                <table class="table table-striped table-hover">
+                    <tbody>
+                        <tr>
+                            <td>Skill(s):</td>
+                            <td>
+                                <select class="col-sm-10" asp-for="PartnerSkill1" asp-items="Model.Skills">
+                                    <option value="">All</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="col-sm-10" asp-for="PartnerSkill2" asp-items="Model.Skills">
+                                    <option value="">All</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="col-sm-10" asp-for="PartnerSkill3" asp-items="Model.Skills">
+                                    <option value="">All</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Nonprofit Preference(s):
+                            </td>
+                            <td>
+                                <select class="col-sm-10" asp-for="PartnerPreference1" asp-items="Model.Preferences">
+                                    <option value="">All</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="col-sm-10" asp-for="PartnerPreference2" asp-items="Model.Preferences">
+                                    <option value="">All</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="col-sm-10" asp-for="PartnerPreference3" asp-items="Model.Preferences">
+                                    <option value="">All</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Active:
+                            </td>
+                            <td>
+                                @Html.CheckBox("FilterActive", false)
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Organization Name:
+                            </td>
+                            <td>
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <input class="btn btn-primary btn" type="submit" value="Filter" />
+                </p>
+            </form>
+        </div>
+    }
+    <table class="table table-striped table-hover">
+        @if (this.User.IsInRole("Nonprofit"))
+        {
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].First_Name),
+                                        "Index",
+                                        new { sortOrder = ViewBag.FirstSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Last_Name),
+                                        "Index",
+                                        new { sortOrder = ViewBag.LastSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.First_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Last_Name)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+        else if (this.User.IsInRole("Guest"))
+        {
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].First_Name),
+                                        "Index",
+                                        new { sortOrder = ViewBag.FirstSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Last_Name),
+                                        "Index",
+                                        new { sortOrder = ViewBag.LastSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Phone_Number),
+                                        "Index",
+                                        new { sortOrder = ViewBag.PhoneSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Email),
+                                         "Index",
+                                         new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Skills",
+                                        "Index",
+                                        new { sortOrder = ViewBag.SkillSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Partners)
+                {
+                    @if ((await AuthorizationService.AuthorizeAsync(User, item, Operations.ModelOperations.Update)).Succeeded)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.First_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Last_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Skill_1)
+                                @if (item.Skill_2 != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.Skill_2)
+                                }
+                                @if (item.Skill_3 != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.Skill_3)
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        }
+        else if (this.User.IsInRole("Partner"))
+        {
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].First_Name),
+                                        "Index",
+                                        new { sortOrder = ViewBag.FirstSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Last_Name),
+                                         "Index",
+                                         new { sortOrder = ViewBag.LastSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Phone_Number),
+                                        "Index",
+                                        new { sortOrder = ViewBag.PhoneSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Email),
+                                         "Index",
+                                         new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Skills",
+                                        "Index",
+                                        new { sortOrder = ViewBag.SkillSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.First_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Last_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Skill_1)
+                            @if (item.Skill_2 != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Skill_2)
+                            }
+                            @if (item.Skill_3 != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Skill_3)
+                            }
+                        </td>
+                        <td>
+                            @if ((await AuthorizationService.AuthorizeAsync(User, @item, Operations.ModelOperations.Update)).Succeeded)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit | </a>
+                            }
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+        else if (this.User.IsInRole("Admin"))
+        {
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].First_Name),
+                                        "Index",
+                                        new { sortOrder = ViewBag.FirstSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Last_Name),
+                                         "Index",
+                                         new { sortOrder = ViewBag.LastSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Phone_Number),
+                                        "Index",
+                                        new { sortOrder = ViewBag.PhoneSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.Partners[0].Email),
+                                         "Index",
+                                         new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Skills",
+                                        "Index",
+                                        new { sortOrder = ViewBag.SkillSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.First_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Last_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Skill_1)
+                            @if (item.Skill_2 != null)
+                            {
+                                <br /> @Html.DisplayFor(modelItem => item.Skill_2)
+                            }
+                            @if (item.Skill_3 != null)
+                            {
+                                <br /> @Html.DisplayFor(modelItem => item.Skill_3)
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Partner"))
+    {
+        <p>
+            <a class="btn btn-primary btn" asp-controller="Partners" asp-action="Create">Add New Partner</a>
+        </p>
+    }
+    @if (this.User.IsInRole("Guest"))
+    {
+        <p>
+            <a class="btn btn-primary btn" asp-controller="Partners" asp-action="Create">Add New Guest Partner</a>
+        </p>
+    }
+    <br />
+
+    @if (Model.Partners.PageCount > 1)
+    {
+        @Html.PagedListPager(Model.Partners, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    }
+
+    Page @(Model.Partners.PageCount < Model.Partners.PageNumber ? 0 : Model.Partners.PageNumber) of @Model.Partners.PageCount
+
+
+
+
+</div>
+
+

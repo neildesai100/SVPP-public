@@ -1,0 +1,165 @@
+﻿@using System.Collections;
+
+@model SVPP.Models.Partner
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+@if (!this.User.IsInRole("Guest"))
+{
+    <h4>Partner</h4>
+}
+else
+{
+    <h4>Guest</h4>
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="OwnerId" />
+            <div class="form-group">
+                <label asp-for="First_Name" class="control-label"></label>
+                <input asp-for="First_Name" class="form-control" />
+                <span asp-validation-for="First_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Last_Name" class="control-label"></label>
+                <input asp-for="Last_Name" class="form-control" />
+                <span asp-validation-for="Last_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone_Number" class="control-label"></label>
+                <input asp-for="Phone_Number" class="form-control" />
+                <span asp-validation-for="Phone_Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street_Address" class="control-label"></label>
+                <input asp-for="Street_Address" class="form-control" />
+                <span asp-validation-for="Street_Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zip_Code" class="control-label"></label>
+                <input asp-for="Zip_Code" class="form-control" />
+                <span asp-validation-for="Zip_Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Twitter_Id" class="control-label"></label>
+                <input asp-for="Twitter_Id" class="form-control" />
+                <span asp-validation-for="Twitter_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Linkedin_Id" class="control-label"></label>
+                <input asp-for="Linkedin_Id" class="form-control" />
+                <span asp-validation-for="Linkedin_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employer" class="control-label"></label>
+                <input asp-for="Employer" class="form-control" />
+                <span asp-validation-for="Employer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job_Title" class="control-label"></label>
+                <input asp-for="Job_Title" class="form-control" />
+                <span asp-validation-for="Job_Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bio" class="control-label"></label>
+                <textarea asp-for="Bio" class="form-control"></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill_1" class="control-label"></label>
+                @Html.DropDownList("Skill_1",
+                    new SelectList((IEnumerable)ViewData["skillsList"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Skill_1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill_2" class="control-label"></label>
+                @Html.DropDownList("Skill_2",
+                    new SelectList((IEnumerable)ViewData["skillsList"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Skill_2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill_3" class="control-label"></label>
+                @Html.DropDownList("Skill_3",
+                    new SelectList((IEnumerable)ViewData["skillsList"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Skill_3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preference_1" class="control-label"></label>
+                @Html.DropDownList("Preference_1",
+                    new SelectList((IEnumerable)ViewData["preferences"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Preference_1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preference_2" class="control-label"></label>
+                @Html.DropDownList("Preference_2",
+                    new SelectList((IEnumerable)ViewData["preferences"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Preference_2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preference_3" class="control-label"></label>
+                @Html.DropDownList("Preference_3",
+                    new SelectList((IEnumerable)ViewData["preferences"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Preference_3" class="text-danger"></span>
+            </div>
+            @if (this.User.IsInRole("Admin"))
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                    </label>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" asp-for="Active" />
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

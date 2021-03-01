@@ -1,0 +1,190 @@
+﻿@using System.Collections;
+
+@model SVPP.Models.Nonprofit
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>New Nonprofit </h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Organization_Name" class="control-label"></label>
+                <input asp-for="Organization_Name" class="form-control" />
+                <span asp-validation-for="Organization_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Focus_Area1" class="control-label"></label>
+                @Html.DropDownList("Focus_Area1",
+                    new SelectList((IEnumerable)ViewData["preferences"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Focus_Area1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Focus_Area2" class="control-label"></label>
+                @Html.DropDownList("Focus_Area2",
+                    new SelectList((IEnumerable)ViewData["preferences"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Focus_Area2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Focus_Area3" class="control-label"></label>
+                @Html.DropDownList("Focus_Area3",
+                    new SelectList((IEnumerable)ViewData["preferences"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Focus_Area3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date_Founded" class="control-label"></label>
+                <input asp-for="Date_Founded" class="form-control" />
+                <span asp-validation-for="Date_Founded" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone_Number" class="control-label"></label>
+                <input asp-for="Phone_Number" class="form-control" />
+                <span asp-validation-for="Phone_Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street_Address" class="control-label"></label>
+                <input asp-for="Street_Address" class="form-control" />
+                <span asp-validation-for="Street_Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zip_Code" class="control-label"></label>
+                <input asp-for="Zip_Code" class="form-control" />
+                <span asp-validation-for="Zip_Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Website" class="control-label"></label>
+                <input asp-for="Website" class="form-control" />
+                <span asp-validation-for="Website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Executive_Name" class="control-label"></label>
+                <input asp-for="Executive_Name" class="form-control" />
+                <span asp-validation-for="Executive_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact_Name" class="control-label"></label>
+                <input asp-for="Contact_Name" class="form-control" />
+                <span asp-validation-for="Contact_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact_Title" class="control-label"></label>
+                <input asp-for="Contact_Title" class="form-control" />
+                <span asp-validation-for="Contact_Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact_Email" class="control-label"></label>
+                <input asp-for="Contact_Email" class="form-control" />
+                <span asp-validation-for="Contact_Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact_Phone" class="control-label"></label>
+                <input asp-for="Contact_Phone" class="form-control" />
+                <span asp-validation-for="Contact_Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facebook_Id" class="control-label"></label>
+                <input asp-for="Facebook_Id" class="form-control" />
+                <span asp-validation-for="Facebook_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Twitter_Id" class="control-label"></label>
+                <input asp-for="Twitter_Id" class="form-control" />
+                <span asp-validation-for="Twitter_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Instagram_Id" class="control-label"></label>
+                <input asp-for="Instagram_Id" class="form-control" />
+                <span asp-validation-for="Instagram_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mission" class="control-label"></label>
+                <textarea asp-for="Mission" class="form-control"></textarea>
+                <span asp-validation-for="Mission" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Programs" class="control-label"></label>
+                <textarea asp-for="Programs" class="form-control"></textarea>
+                <span asp-validation-for="Programs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Challenges" class="control-label"></label>
+                <textarea asp-for="Challenges" class="form-control"></textarea>
+                <span asp-validation-for="Challenges" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tax_Status" class="control-label"></label>
+                <input asp-for="Tax_Status" class="form-control" />
+                <span asp-validation-for="Tax_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tax_Id" class="control-label"></label>
+                <input asp-for="Tax_Id" class="form-control" />
+                <span asp-validation-for="Tax_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill_1" class="control-label"></label>
+                @Html.DropDownList("Skill_1",
+                    new SelectList((IEnumerable)ViewData["skillsList"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Skill_1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill_2" class="control-label"></label>
+                @Html.DropDownList("Skill_2",
+                    new SelectList((IEnumerable)ViewData["skillsList"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Skill_2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill_3" class="control-label"></label>
+                @Html.DropDownList("Skill_3",
+                    new SelectList((IEnumerable)ViewData["skillsList"]),
+                    "Select...",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Skill_3" class="text-danger"></span>
+            </div>
+            @if (this.User.IsInRole("Admin"))
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                    </label>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

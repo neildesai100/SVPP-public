@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <div class="jumbo">
+        <div class="jumbotron">
+            <h1>Welcome to the SVPP Portal</h1>
+            <p class="lead">The SVPP Portal is the one-stop destination for information on all partners and nonprofits that work with SVPP. Log in or register your account to begin using the site. For general information on SVPP or the Full Circle Accelerator, visit SVPP's main website at <a class="white" href="https://www.svppittsburgh.org/" target="_blank">svppittsburgh.org</a>.</p>
+            @if (!this.User.IsInRole("Admin") & !this.User.IsInRole("Nonprofit") & !this.User.IsInRole("Partner") & !this.User.IsInRole("Guest"))
+            {
+                <p><a class="btn btn-white btn-lg" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a></p>
+                <p><a class="btn btn-white btn-lg" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a></p>
+            }
+        </div>
+    </div>
+</div>

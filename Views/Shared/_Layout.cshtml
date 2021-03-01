@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SVPP </title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <div class="bs-example">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">
+                    <img src="~/Images/SVPlogo_Pittsburgh_50.png" alt="SVP Pittsburgh">
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" asp-controller="Home" asp-action="Index">Home</a>
+                        @using Microsoft.AspNetCore.Authorization
+                        @inject IAuthorizationService AuthorizationService
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "loggedinpolicy")).Succeeded)
+                        {
+                            <a class="nav-item nav-link" asp-controller="Partners" asp-action="Index">Partners</a>
+                            <a class="nav-link" asp-controller="Nonprofits" asp-action="Index">Nonprofits</a>
+                            <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "guestpolicy")).Succeeded)
+                        {
+                            <a class="nav-item nav-link" asp-controller="Partners" asp-action="Index">Guest</a>
+                            <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+                        }
+
+                    </div>
+                    <div class="navbar-nav ml-auto">
+                        <partial name="_LoginPartial" />
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - SVPP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
